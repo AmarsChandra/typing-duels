@@ -1,5 +1,5 @@
 export const DUEL_TEXT =
-  "Thunder rolled across the valley as two young raptors sprinted between ferns, sharp claws kicking up dust while they chased the same distant beacon through the prehistoric dawn.";
+  "Speed comes from rhythm, calm focus, and clean accuracy. Stay loose, read ahead, and let your hands move with confidence all the way to the finish.";
 
 export function countTypedCharacters(input: string) {
   let count = 0;

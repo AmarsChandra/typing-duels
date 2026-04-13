@@ -16,11 +16,14 @@
 
 html {
   min-height: 100%;
+  background-color: #0b100a;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top, rgba(217, 119, 6, 0.26), transparent 28%),
     radial-gradient(circle at 80% 20%, rgba(125, 213, 111, 0.12), transparent 20%),
@@ -68,10 +71,13 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 28px;
   background:
+    radial-gradient(circle at 18% 22%, rgba(232, 211, 159, 0.06) 0 2px, transparent 2px 100%),
+    radial-gradient(circle at 78% 72%, rgba(232, 211, 159, 0.05) 0 1.5px, transparent 1.5px 100%),
     linear-gradient(180deg, rgba(42, 51, 34, 0.92), rgba(22, 27, 19, 0.96)),
     var(--panel);
   backdrop-filter: blur(18px);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  position: relative;
 }
 
 .hero-card {
@@ -79,7 +85,6 @@ textarea {
   display: grid;
   gap: 28px;
   overflow: hidden;
-  position: relative;
 }
 
 .hero-card::after {
@@ -94,6 +99,20 @@ textarea {
     radial-gradient(circle, rgba(217, 119, 6, 0.32), transparent 56%),
     radial-gradient(circle at 30% 30%, rgba(125, 213, 111, 0.22), transparent 36%);
   filter: blur(8px);
+}
+
+.hero-silhouette {
+  position: absolute;
+  right: 32px;
+  top: 28px;
+  width: min(42vw, 420px);
+  height: min(36vw, 320px);
+  pointer-events: none;
+  opacity: 0.13;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 420'%3E%3Cpath fill='%23e8d39f' d='M522 109c-22-23-48-37-81-44-23-5-54-8-76 2-16 8-40 31-52 45-26 29-67 33-104 41-39 8-67 20-105 43-34 21-80 71-75 114 2 21 20 39 41 43 22 4 46-2 67-8 24-6 47-15 70-22 9 29 9 57 8 87h57c6-43 13-92 41-127 20-26 51-39 81-41 18-1 39 2 57 0 24-4 40-20 53-40 16 14 36 25 56 33 19 8 40 16 60 12 11-2 21-10 24-21 9-27-16-57-33-75-25-28-56-52-89-74Zm-302 118c9 0 17 7 17 16 0 10-8 17-17 17-9 0-16-7-16-17 0-9 7-16 16-16Zm232 18c31 12 56 34 71 51-32-8-64-27-88-49 6-3 11-3 17-2Z'/%3E%3C/svg%3E");
 }
 
 .room-card {
@@ -204,6 +223,11 @@ h2 {
   color: var(--text);
 }
 
+.secondary-button.is-copied {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ddd6bf;
+}
+
 .primary-button:hover,
 .secondary-button:hover {
   transform: translateY(-1px);
@@ -224,9 +248,14 @@ h2 {
   padding: 22px;
   border-radius: 22px;
   background:
+    radial-gradient(circle at 16% 20%, rgba(232, 211, 159, 0.04) 0 2px, transparent 2px 100%),
+    radial-gradient(circle at 74% 68%, rgba(232, 211, 159, 0.03) 0 1.5px, transparent 1.5px 100%),
     linear-gradient(180deg, rgba(36, 46, 31, 0.94), rgba(20, 26, 18, 0.96)),
     var(--panel-strong);
   border: 1px solid var(--border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    inset 0 -18px 30px rgba(0, 0, 0, 0.08);
 }
 
 .share-card {
@@ -297,17 +326,76 @@ h2 {
 }
 
 .progress-bar {
-  height: 12px;
+  position: relative;
+  height: 28px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  border: 1px solid rgba(232, 211, 159, 0.12);
 }
 
-.progress-bar span {
+.progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
   display: block;
-  height: 100%;
-  border-radius: inherit;
   background: linear-gradient(90deg, #7dd56f, #d97706);
+  opacity: 0.24;
+}
+
+.progress-footprints {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  align-items: center;
+  gap: 2px;
+  padding: 0 10px;
+}
+
+.footprint {
+  justify-self: center;
+  width: 14px;
+  height: 18px;
+  border-radius: 55% 55% 45% 45%;
+  background: rgba(232, 211, 159, 0.12);
+  transform: rotate(-12deg);
+  position: relative;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.footprint:nth-child(even) {
+  transform: rotate(12deg) translateY(2px);
+}
+
+.footprint::before,
+.footprint::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.footprint::before {
+  left: 1px;
+}
+
+.footprint::after {
+  right: 1px;
+}
+
+.footprint.is-filled {
+  background: rgba(232, 211, 159, 0.92);
+}
+
+.footprint.is-filled:nth-child(even) {
+  transform: rotate(12deg) translateY(2px) scale(1.02);
+}
+
+.footprint.is-filled:nth-child(odd) {
+  transform: rotate(-12deg) scale(1.02);
 }
 
 .is-active {
@@ -368,6 +456,14 @@ h2 {
     padding: 24px;
   }
 
+  .hero-silhouette {
+    right: -10px;
+    top: 56px;
+    width: 240px;
+    height: 200px;
+    opacity: 0.09;
+  }
+
   .share-card,
   .room-header,
   .scoreboard,
@@ -383,5 +479,14 @@ h2 {
   .qr-code {
     width: 150px;
     height: 150px;
+  }
+
+  .progress-footprints {
+    padding: 0 8px;
+  }
+
+  .footprint {
+    width: 10px;
+    height: 14px;
   }
 }
