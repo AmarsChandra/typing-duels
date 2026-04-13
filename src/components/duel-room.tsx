@@ -227,7 +227,7 @@ export function DuelRoom({ roomId }: { roomId: string }) {
     return (
       <main className="page-shell">
         <section className="room-card">
-          <p>Loading duel room...</p>
+          <p>Excavating fossil arena...</p>
         </section>
       </main>
     );
@@ -238,24 +238,24 @@ export function DuelRoom({ roomId }: { roomId: string }) {
       <section className="room-card">
         <div className="room-header">
           <div>
-            <p className="eyebrow">Room {room.id}</p>
-            <h1>First to finish wins.</h1>
+            <p className="eyebrow">Fossil Arena {room.id}</p>
+            <h1>Outtype your rival before extinction.</h1>
           </div>
           <div className={`status-pill status-${room.status}`}>{room.status}</div>
         </div>
 
         {!currentPlayer && room.players.length < 2 ? (
           <div className="join-panel">
-            <p>Pick a name and jump in. The 10 second countdown starts as soon as both players are here.</p>
+            <p>Choose your dinosaur name and stomp in. The 10 second meteor countdown starts when both beasts arrive.</p>
             <div className="join-row">
               <input
                 value={playerName}
                 onChange={(event) => setPlayerName(event.target.value)}
-                placeholder="Your nickname"
+                placeholder="TriceraTop"
                 maxLength={24}
               />
               <button className="primary-button" type="button" disabled={isJoining} onClick={handleJoinRoom}>
-                {isJoining ? "Joining..." : "Join duel"}
+                {isJoining ? "Entering arena..." : "Join arena"}
               </button>
             </div>
             {joinError ? <p className="error-text">{joinError}</p> : null}
@@ -264,39 +264,39 @@ export function DuelRoom({ roomId }: { roomId: string }) {
 
         {!currentPlayer && room.players.length >= 2 ? (
           <div className="join-panel">
-            <p>This duel already has two players. Open a new room to start another race.</p>
+            <p>This fossil arena already has two dinosaurs. Hatch a new room to start another showdown.</p>
           </div>
         ) : null}
 
         <div className="scoreboard">
           <article className={`player-card ${currentPlayer ? "is-active" : ""}`}>
-            <p>You</p>
+            <p>Your dino</p>
             <strong>{currentPlayer?.name ?? "Spectator"}</strong>
             <div className="progress-bar">
               <span style={{ width: `${playerProgress}%` }} />
             </div>
-            <small>{playerProgress}% complete</small>
+            <small>{playerProgress}% through the trail</small>
           </article>
 
           <article className="player-card">
-            <p>Opponent</p>
-            <strong>{opponent?.name ?? "Waiting for challenger..."}</strong>
+            <p>Rival dino</p>
+            <strong>{opponent?.name ?? "Waiting in the jungle..."}</strong>
             <div className="progress-bar">
               <span style={{ width: `${opponentProgress}%` }} />
             </div>
-            <small>{opponent ? `${opponentProgress}% complete` : "Not joined yet"}</small>
+            <small>{opponent ? `${opponentProgress}% through the trail` : "Not joined yet"}</small>
           </article>
         </div>
 
         {room.status === "waiting" ? (
-          <div className="stage-banner">Share this room link with a friend and wait for them to join.</div>
+          <div className="stage-banner">Share this fossil link with a friend and wait for them to stomp into the arena.</div>
         ) : null}
 
         {isHost ? (
           <div className="share-card">
             <div>
-              <p className="share-label">Invite your opponent</p>
-              <h2>Send this duel link</h2>
+              <p className="share-label">Summon your rival</p>
+              <h2>Send this fossil link</h2>
               <p className="share-link">{shareLink}</p>
             </div>
 
@@ -310,7 +310,7 @@ export function DuelRoom({ roomId }: { roomId: string }) {
                 type="button"
                 onClick={() => navigator.clipboard.writeText(shareLink)}
               >
-                Copy link
+                Copy fossil link
               </button>
             </div>
           </div>
@@ -318,14 +318,14 @@ export function DuelRoom({ roomId }: { roomId: string }) {
 
         {room.status === "countdown" ? (
           <div className="countdown-panel">
-            <p>Both players locked in</p>
+            <p>Both dinosaurs are locked in</p>
             <div className="countdown-number">{countdownSeconds}</div>
-            <small>Race starts when the timer hits zero.</small>
+            <small>The meteor hits zero and the stampede begins.</small>
           </div>
         ) : null}
 
         <div className="text-panel">
-          <p className="eyebrow">Typing course</p>
+          <p className="eyebrow">Fossil trail</p>
           <p className="duel-text">{textMarkup}</p>
         </div>
 
@@ -333,16 +333,16 @@ export function DuelRoom({ roomId }: { roomId: string }) {
           className="typing-input"
           value={typedText}
           onChange={(event) => void submitText(event.target.value)}
-          placeholder={currentPlayer ? "Start typing here when the race begins..." : "Join the duel to start typing"}
+          placeholder={currentPlayer ? "Type here when the stampede begins..." : "Join the arena to start typing"}
           disabled={!currentPlayer || room.status !== "racing" || Boolean(winner)}
           spellCheck={false}
         />
 
         {winner ? (
           <div className="winner-banner">
-            <p className="eyebrow">Winner</p>
-            <h2>{winner.id === playerId ? "You win the duel." : `${winner.name} wins the duel.`}</h2>
-            <small>The race ends the moment someone completes the full passage.</small>
+            <p className="eyebrow">Alpha predator</p>
+            <h2>{winner.id === playerId ? "You rule the valley." : `${winner.name} rules the valley.`}</h2>
+            <small>The race ends the moment one dinosaur clears the entire fossil trail.</small>
           </div>
         ) : null}
       </section>

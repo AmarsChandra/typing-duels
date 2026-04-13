@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Typing Duels",
-  description: "Challenge another player to a live 1v1 typing race.",
+  title: "DinosaurType",
+  description: "A prehistoric 1v1 typing race where the fastest dino survives.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

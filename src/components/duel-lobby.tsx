@@ -50,26 +50,26 @@ export function DuelLobby() {
   return (
     <main className="page-shell">
       <section className="hero-card">
-        <div className="eyebrow">Live head-to-head typing</div>
-        <h1>Typing duels built for bragging rights.</h1>
+        <div className="eyebrow">Prehistoric 1v1 typing</div>
+        <h1>DinosaurType is built for apex predators.</h1>
         <p className="hero-copy">
-          Create a room, share the link or QR code, wait for your challenger, then sprint through the same
-          passage when the countdown hits zero.
+          Open a fossil arena, lure in a rival dinosaur, and race through the same passage when the meteor
+          countdown hits zero.
         </p>
 
         <form className="create-form" onSubmit={handleCreateDuel}>
           <label className="field">
-            <span>Your name</span>
+            <span>Dino name</span>
             <input
               value={playerName}
               onChange={(event) => setPlayerName(event.target.value)}
-              placeholder="SpeedDemon99"
+              placeholder="RaptorRacer"
               maxLength={24}
             />
           </label>
 
           <button className="primary-button" type="submit" disabled={isPending}>
-            {isPending ? "Preparing duel..." : "Start Duel"}
+            {isPending ? "Opening fossil arena..." : "Start Dino Duel"}
           </button>
         </form>
 
